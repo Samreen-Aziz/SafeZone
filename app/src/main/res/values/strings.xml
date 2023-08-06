@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">safezone</string>
+
+    <string name="home">home</string>
+
+    <string-array name="spinner_items">
+        <item>Report</item>
+        <item>Leave</item>
+    </string-array>
+    <string-array name="spinner_items2">
+        <item>Anonymously</item>
+        <item>With Credentials</item>
+    </string-array>
+    <string-array name="spinner_items2_leave">
+        <item>With Credentials</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
+
