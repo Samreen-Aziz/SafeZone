@@ -1,0 +1,4 @@
+<!-- res/values/dimens.xml -->
+<resources>
+    <dimen name="card_elevation">50dp</dimen>
+</resources>

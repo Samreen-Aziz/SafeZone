@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:endColor="#A5678E"
+        android:startColor="#39549E"
+        android:type="linear"
+        android:angle="90"
+        />
+    <corners android:radius="10dp" /> <!-- Replace with your desired corner radius in dp -->
+</shape>
