@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         int itemId = menuItem.getItemId();
         if (itemId == R.id.home) {
             selectedFragment = new DriverHomeFragment();
-        } else if (itemId == R.id.notification) {
+        } else if (itemId == R.id.studList) {
             selectedFragment = new NotificationsFragment();
         } else if (itemId == R.id.account_details) {
             selectedFragment = new AccountDetailsFragment();

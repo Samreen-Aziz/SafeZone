@@ -112,14 +112,16 @@ public class DriverHomeFragment extends Fragment {
             }
         });
         // Find the submit button and set its click listener
-        Button submitButton = rootView.findViewById(R.id.button);
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        Button sendButton = rootView.findViewById(R.id.button);
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Send the selected reason as a notification to parents
                 if (selectedReason != null) {
-                    NotificationData notificationData = new NotificationData("Notification from driver!", selectedReason, formattedDate, formattedTime);
-                    PushNotification notification = new PushNotification(notificationData, Constants.TOPIC);
+                    NotificationData notificationData = new NotificationData("Notification " +
+                            "from driver!", selectedReason, formattedDate, formattedTime);
+                    PushNotification notification = new PushNotification(notificationData,
+                            Constants.TOPIC);
                     sendNotification(notification);
                     // Deselect the card after sending the notification
                     if (selectedCard != null) {
@@ -128,7 +130,8 @@ public class DriverHomeFragment extends Fragment {
                         selectedReason = null;
                     }
                 } else {
-                    Toast.makeText(getContext(), "Please select a reason!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please select a reason!",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -177,22 +180,26 @@ public class DriverHomeFragment extends Fragment {
     }
 
     private void sendNotification(PushNotification notification) {
-        Retrofit fcmretrofit = ApiUtilities.getClient("https://fcm.googleapis.com");
+        Retrofit fcmretrofit = ApiUtilities.getClientForFCM();
         ApiInterface fcmapiInterface = fcmretrofit.create(ApiInterface.class);
         fcmapiInterface.sendNotification(notification).enqueue(new Callback<PushNotification>(){
             @Override
-            public void onResponse(Call<PushNotification> call, Response<PushNotification> response) {
+            public void onResponse(Call<PushNotification> call, Response<PushNotification>
+                    response) {
                 Log.d("NetworkLogfirebase", "Request URL: " + call.request().url());
 
                 if (response.isSuccessful()) {
                     String notificationBody = notification.getData().getMessage();
                     Log.d("Notification Body", "Notification Body" + notificationBody);
-                    saveNotificationToServer(notificationBody); // Call the method to save the notification data to the server
+                    // Call the method to save the notification data to the server
+                    saveNotificationToServer(notificationBody);
                     Log.d("Response", response.toString());
-                    Toast.makeText(getContext(), "Notification sent successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Notification sent successfully",
+                            Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getContext(), "Notification failed to send", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Notification failed to send",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -202,21 +209,20 @@ public class DriverHomeFragment extends Fragment {
         });
     }
     private void saveNotificationToServer(String notificationContent) {
-        Retrofit phpretrofit = ApiUtilities.getClient(Constants.PHP_BASE_URL);
+        Retrofit phpretrofit = ApiUtilities.getClientForPHP();
         ApiInterface phpsaveNotif = phpretrofit.create(ApiInterface.class);
-
         phpsaveNotif.insertNotification(notificationContent, formattedDate, formattedTime)
                 .enqueue(new Callback<insertNotificationResponse>() {
-        // Call the API to save notification data to the server
             @Override
-            public void onResponse(Call<insertNotificationResponse> call, Response<insertNotificationResponse> response) {
+            public void onResponse(Call<insertNotificationResponse> call,
+                                   Response<insertNotificationResponse> response) {
                 Log.d("NetworkLogs", "Request URL: " + call.request().url());
 
                 if (response.isSuccessful()) {
                     insertNotificationResponse insertNotificationResponse = response.body();
-
                     if (insertNotificationResponse != null) {
-                        Log.d("Notification Insertion", "Insertion is successful: " + insertNotificationResponse.getMessage());
+                        Log.d("Notification Insertion", "Insertion is successful: "
+                                + insertNotificationResponse.getMessage());
                     } else {
                         Log.d("Notification Insertion", "Null response");
                     }

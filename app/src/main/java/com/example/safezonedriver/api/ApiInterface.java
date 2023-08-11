@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import com.example.safezonedriver.model.insertNotificationResponse;
+import com.example.safezonedriver.model.*;
 
 
 public interface ApiInterface {
@@ -28,6 +29,12 @@ public interface ApiInterface {
     @POST("fcm/send")
     Call<PushNotification> sendNotification(
             @Body PushNotification notification
+    );
+    @FormUrlEncoded
+    @POST("DriverLogin.php")
+    Call<LoginResponse> login(
+            @Field("id") String id,
+            @Field("password") String password
     );
 
 }
